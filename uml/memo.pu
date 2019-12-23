@@ -1,0 +1,44 @@
+@startuml
+    start
+        if (セッション確認) then (no)
+            partition index.html {        
+                :プレイヤー名入力;
+                if (ボタン操作) then (決定)
+                    :セッションに保存;
+                    :データベース保存;
+                    :room.htmlに移動;
+                else (キャンセル)
+                    stop;
+                endif
+            }
+        else (yes)
+        endif
+        partition room.html {
+                :セッションからプレイヤー名を取得;
+                :プレイヤー名をヘッダーに追加表示;
+                if (ルーム作成) then (yes)
+                    :部屋名入力;
+                    if (ボタン操作) then (作成)
+                        :データベースに保存;
+                    else (キャンセル)
+                        stop
+                    endif
+                elseif (ルーム入室) then (yes)
+                    :データベースからルーム一覧取得;
+                    :ルーム選択;
+                    if (ボタン操作) then (決定)
+                    else (キャンセル)
+                        stop
+                    endif
+                elseif (ログアウト) then (yes)
+                    :セッションの削除;
+                    :index.htmlに戻る;
+                    stop
+                endif
+                :room_idをデータベースに追加;
+                :player.htmlに移動;
+            }
+        partition player.html {
+
+        }
+@enduml

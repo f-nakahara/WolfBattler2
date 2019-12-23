@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+{% load static %}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/room.js' %}"></script>
+    <script type="text/javascript" charset="UTF-8" src="{% static 'js/csrf.js' %}"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <title>人狼ゲーム</title>
+</head>
+
+<body class="bg-secondary">
+    <header>
+        <div class="container-fluid bg-dark">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-danger pt-3 text-center">人狼バトラー2</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <h3 class="text-left text-light" id="room_name">{{room_name}}</h3>
+                </div>
+                <div class="col-6">
+                    <h3 class="text-right text-light" id="player_name">{{ player_name }}</h3>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <div class="row mt-2">
+                <div class="col">
+                    <div class="card">
+                        <div class="card-body" style="overflow-y: scroll;"></div>
+                        <div class="card-footer">
+                            <div class="normal">
+                                <form class="form-inline">
+                                    <input class="form-control w-75" name="input_word">
+                                    <input type="submit" value="送信" class="btn w-25 send">
+                                </form>
+                            </div>
+                            <div class="talk">
+                                <form class="form-inline">
+                                    <select class="form-control w-25 remark_type">
+                                        <option>カミングアウト</option>
+                                        <option>推定発言</option>
+                                        <option>投票発言</option>
+                                        <option>占い発言</option>
+                                        <option>その他</option>
+                                    </select>
+                                    <select class="form-control w-25 player_list"></select>
+                                    <select class="form-control w-50 role_list">
+                                        <option>村人</option>
+                                        <option>占い師</option>
+                                        <option>狂人</option>
+                                        <option>人狼</option>
+                                    </select>
+                                    <select class="form-control w-25 result_list">
+                                        <option>人間</option>
+                                        <option>人狼</option>
+                                    </select>
+                                    <select class="form-control w-50 other_list">
+                                        <option>様子を見る</option>
+                                        <option>会話を終了する</option>
+                                    </select>
+                                    <input type="submit" value="送信" class="btn w-25 send">
+                                </form>
+                            </div>
+                            <div class="action">
+                                <form class="form-inline">
+                                    <select class="form-control w-75 player_list"></select>
+                                    <input type="submit" value="送信" class="btn w-25 send">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-1">
+            <div class="col text-center">
+                <button class="btn" id="back">ホームに戻る</button>
+                <button class="btn btn-danger" id="start">ゲーム開始</button>
+            </div>
+        </div>
+        </div>
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+@startuml
+    start
+        :main();
+        fork
+            :playerInitialize();
+        fork again
+            :cpuInitialize();
+        end fork
+        repeat
+            fork
+                :playerDailyInitialize();
+            fork again
+                :cpuDailyInitialize();
+            end fork
+            fork
+                :playerTalk();
+            fork again
+                :cpuTalk();
+            end fork
+            fork
+                :playerVote();
+            fork again
+                :cpuVote();
+            end fork
+            fork
+                :playerExecute();
+            fork again
+                :cpuExecute();
+            end fork
+            :勝利判定;
+            fork
+                :playerDivine();
+            fork again
+                :cpuDivine();
+            end fork
+            fork
+                :playerAttack();
+            fork again
+                :cpuAttack();
+            end fork
+        repeat while (勝利判定)
+        fork
+            :playerFinish();
+        fork again
+            :cpuFinish();
+        end fork
+    stop
+@enduml

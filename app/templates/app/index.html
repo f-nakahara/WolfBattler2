@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ja">
+{% load static %}
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script type="text/javascript" src="{% static 'js/jquery-3.4.1.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/index.js' %}"></script>
+    <script type="text/javascript" charset="UTF-8" src="{% static 'js/csrf.js' %}"></script>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    <title>人狼ゲーム</title>
+</head>
+
+<body class="bg-secondary">
+    <header>
+        <div class="container-fluid bg-dark">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="text-danger pt-3 text-center">人狼バトラー2</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <h3 class="text-right text-light">{{ player_name }}</h3>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            {% if not login %}
+            <div class="row">
+                <div class="col">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <div class="card">
+                            <div class="card-header">
+                                <h3>プレイヤー作成</h3>
+                            </div>
+                            <div class="card-body">
+                                <input class="form-control" placeholder="プレイヤー名" required name="player_name">
+                            </div>
+                            <div class="card-footer text-right">
+                                {% if error %}
+                                <p class="text-danger text-left">現在使用されています！</p>
+                                {% endif %}
+                                <input type="submit" value="決定" class="btn btn-danger">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% else %}
+            <div class="row">
+                <div class="col text-center">
+                    <button class="btn btn-lg" data-toggle="modal" data-target="#create_room_modal">ルーム作成</button>
+                    <button class="btn btn-lg" data-toggle="modal" , data-target="#enter_room_modal">ルーム参加</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col text-center">
+                    <form method="POST" action="">
+                        {% csrf_token %}
+                        <input type="submit" value="ログアウト" class="btn btn-lg btn-danger" name="logout">
+                    </form>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </main>
+    <!-- モーダルの設定 -->
+    <!-- ルーム作成画面 -->
+    <div class="modal fade" id="create_room_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <form>
+                    {% csrf_token %}
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">ルーム作成</h5>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control" placeholder="ルーム名" required name="room_name">
+                    </div>
+                    <div class="modal-footer">
+                        <p class="text-danger error"></p>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                        <input type="submit" value="決定" class="btn btn-danger" name="create_room">
+                    </div><!-- /.modal-footer -->
+                </form>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+    <div class="modal fade" id="enter_room_modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ルーム参加</h5>
+                </div>
+                <div class="modal-body player_list" style="overflow-y: scroll;">
+                    {% for room in room_list %}
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>{{room.name}}</h5>
+                            {% if room.num < 5 %}
+                            <p>人数：{{room.num}}/5</p>
+                            {% else %}
+                            <p>人数：<span class="text-danger">{{room.num}}/5</span></p>
+                            {% endif %}
+                            {% if room.game %}
+                            ゲーム：<span class="text-danger">プレイ中</span>
+                            {% else %}
+                            ゲーム：待機中
+                            {% endif %}
+                        </div>
+                        <div class="card-footer text-right">
+                            {% if room.num < 5 and not room.game %}
+                            <button class="btn btn-danger text-right enter_room">参加</button>
+                            {% else %}
+                            <button class="btn btn-danger text-right enter_room" disabled>参加</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <p class="text-danger error"></p>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                </div><!-- /.modal-footer -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+</body>
+
+</html>
