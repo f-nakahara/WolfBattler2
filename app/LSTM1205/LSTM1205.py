@@ -1,9 +1,3 @@
-#!/usr/bin/env python
-from __future__ import print_function, division
-
-# this is main script
-# simple version
-
 from app.LSTM1205.aiwolfpy import contentbuilder as cb
 import random
 import numpy as np
