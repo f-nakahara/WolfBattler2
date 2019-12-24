@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
+import dj_database_url
 import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -23,6 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pow7v!a-d-gag%*@63#!z6^sy)d)z$7_3p!@@jd0txk@@g!)+x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
@@ -85,6 +87,9 @@ DATABASES = {
     }
 }
 
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
@@ -123,6 +128,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'app/static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 ASGI_APPLICATION = 'WolfBattler2.routing.application'
 
