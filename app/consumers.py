@@ -1,8 +1,6 @@
 from channels.generic.websocket import WebsocketConsumer
 import json
 from asgiref.sync import async_to_sync
-from app.models import Player, Room
-from channels.layers import get_channel_layer
 import random
 from threading import Thread
 import time
