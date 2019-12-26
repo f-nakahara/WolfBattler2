@@ -221,6 +221,7 @@ class Agent(object):
                 else:
                     if p in self.AliveList:
                         self.AliveList.remove(int(p))
+            print(self.AliveList)
         # データがある場合、updateInfoの実行
         if len(diff_data) != 0:
             texts = diff_data

@@ -432,7 +432,7 @@ class GameMaster(WebsocketConsumer):
             if flag:
                 print("ループ中・・・")
             else:
-                game = None
+                del game
                 # self.resetCpu(game)
                 return
         print("ループ脱出！！")
@@ -777,6 +777,7 @@ class GameMaster(WebsocketConsumer):
         self.sendToGroup()
         for cpu in game.cpu_list.values():
             cpu.clearBackend()
+        del game
 
     def judgeResult(self, game):
         alive_role = []
