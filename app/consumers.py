@@ -226,6 +226,7 @@ class GameMaster(WebsocketConsumer):
             print("チャンネルリスト\n{}".format(self.channel_list))
             self.game_info[self.room_group_name] = GameInfo(self.channel_list[self.room_group_name])
             print("ゲームリスト\n{}".format(self.game_info))
+            self.sendContents["dead"] = None
             threads = threading.Thread(target=self.main, args=[
                                        self.game_info[self.room_group_name], True])
             threads.start()
