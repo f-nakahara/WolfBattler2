@@ -770,6 +770,9 @@ class GameMaster(WebsocketConsumer):
         self.endGame()
         self.sendContents["type"] = "notice"
         self.sendContents["request"] = "finish"
+        for player_name,player in game.player_info.items():
+            self.sendContents["message"] = "{}:{}".format(player_name,player["myRole"])
+            self.sendToGroup()
         self.sendContents["message"] = "{}の勝利！！".format(winner)
         self.sendToGroup()
         for cpu in game.cpu_list.values():

@@ -24,7 +24,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'pow7v!a-d-gag%*@63#!z6^sy)d)z$7_3p!@@jd0txk@@g!)+x'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
@@ -87,8 +86,8 @@ WSGI_APPLICATION = 'WolfBattler2.wsgi.application'
 #     }
 # }
 
-# db_from_env = dj_database_url.config()
-# DATABASES['default'].update(db_from_env)
+# DATABASES['default'] = dj_database_url.config()
+# SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
 DATABASES = {
     'default': dj_database_url.config()
