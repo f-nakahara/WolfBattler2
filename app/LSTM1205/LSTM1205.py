@@ -243,6 +243,7 @@ class Agent(object):
 
     def dayStart(self):
         self.report = False
+        self.turn = -1
         return None
 
     def talk(self):
