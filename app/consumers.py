@@ -754,7 +754,7 @@ class GameMaster(WebsocketConsumer):
                     if game.player_info[player_name]["myRole"] == "人狼":
                         if game.player_info[target]["status"] == "ALIVE":
                             game.dead_player = target
-                            game.player_info[target]["status"] == "DEAD"
+                            game.player_info[target]["status"] = "DEAD"
                             targetId = game.player_info[target]["agentId"]
                             game.base_info["statusMap"][str(targetId)] = "DEAD"
                             text = []
